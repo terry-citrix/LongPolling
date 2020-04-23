@@ -47,4 +47,36 @@ You can see that the HTTP threads (those that start with "http-nio-") terminate 
 
 So this is much better than consuming Tomcat HTTP threads, but it still won't scale as much as we'd like.
 
+## AsyncContext-Per-Thread
 
+In order to avoid holding onto a Thread per request we can use HttpServlet's support for AsyncContext.
+
+Make a request to http://localhost:8083/nothread/listen in 5+ browser tabs simultaneously.
+
+After a while (not immediately), you should get back a text response. Check the server logs and you'll see something like this:
+
+```
+Accepting '/nothread/listen' request in thread http-nio-8083-exec-1
+Freeing up thread http-nio-8083-exec-1
+Accepting '/nothread/listen' request in thread http-nio-8083-exec-3
+Freeing up thread http-nio-8083-exec-3
+Accepting '/nothread/listen' request in thread http-nio-8083-exec-1
+Freeing up thread http-nio-8083-exec-1
+Accepting '/nothread/listen' request in thread http-nio-8083-exec-2
+Freeing up thread http-nio-8083-exec-2
+Accepting '/nothread/listen' request in thread http-nio-8083-exec-3
+Freeing up thread http-nio-8083-exec-3
+Accepting '/nothread/listen' request in thread http-nio-8083-exec-1
+Freeing up thread http-nio-8083-exec-1
+Produced a new message with value: '2020/04/23 18:52:30'
+Creating response for asyncContext from original thread http-nio-8083-exec-1 in NEW thread http-nio-8083-exec-2
+Creating response for asyncContext from original thread http-nio-8083-exec-1 in NEW thread http-nio-8083-exec-1
+Creating response for asyncContext from original thread http-nio-8083-exec-3 in NEW thread http-nio-8083-exec-3
+Creating response for asyncContext from original thread http-nio-8083-exec-3 in NEW thread http-nio-8083-exec-1
+Creating response for asyncContext from original thread http-nio-8083-exec-2 in NEW thread http-nio-8083-exec-2
+Creating response for asyncContext from original thread http-nio-8083-exec-1 in NEW thread http-nio-8083-exec-3
+```
+
+In this environment I only have 3 Tomcat HTTP Threads in my request thread pool. You can see that I made 6 requests, and each one is handled.  That's because after each invocation the HTTP thread is freed up and is available to handle a new HTTP request.
+
+Then a new message is produced, and we see that all 6 requests are quickly responded to.

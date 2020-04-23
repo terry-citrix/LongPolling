@@ -2,8 +2,6 @@ package com.longpoll.service.thread.logic;
 
 public interface ThreadMessageQueue {
 
-    final static String GROUP1 = "group1";
-
     void pushMessage(String groupId, String value);
 
     String getMessage(String groupId);

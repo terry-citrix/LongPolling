@@ -14,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({
 	"com.longpoll.service.common",
 	"com.longpoll.service.nothread.servlet",
+	"com.longpoll.service.nothread.logic",
 	"com.longpoll.service.thread.controller",
 	"com.longpoll.service.thread.logic"})
 public class ServiceApplication {

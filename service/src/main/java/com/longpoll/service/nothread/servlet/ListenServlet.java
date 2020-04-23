@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.longpoll.service.common.MessageProducer;
+import com.longpoll.service.nothread.logic.ContextInfo;
+import com.longpoll.service.nothread.logic.NoThreadMessageQueue;
+
 @WebServlet(
     urlPatterns = { "/nothread/listen" },
     name = "NoThreadListener",
@@ -18,18 +22,16 @@ import javax.servlet.http.HttpServletResponse;
     asyncSupported = true)
 public class ListenServlet extends HttpServlet {
 
-    static final long serialVersionUID = 5011857421L;
+    static final long serialVersionUID = 6111857423L;
+
+    private NoThreadMessageQueue messageQueue;
    
-    public ListenServlet() {
-        // TEMP FIXME TODO
-        System.out.println("ListenServlet constructor");
+    public ListenServlet(NoThreadMessageQueue messageQueue) {
+        this.messageQueue = messageQueue;
     }
 
     @Override
     public void init() throws ServletException {
-        // TEMP FIXME TODO
-        System.out.println("Starting up the ListenServlet");
-
         // Do required initialization
     }
 
@@ -38,24 +40,13 @@ public class ListenServlet extends HttpServlet {
         System.out.println("Accepting '/nothread/listen' request in thread " + Thread.currentThread().getName());
 
         response.setContentType("text/html;charset=UTF-8");
-        final AsyncContext aContext = request.startAsync();
+        
+        final AsyncContext context = request.startAsync();
+        ContextInfo contextInfo = new ContextInfo(context, Thread.currentThread().getName());
 
-        aContext.start(new Runnable() {
-            public void run() {
-                String result = "Hi";
-                HttpServletResponse response = (HttpServletResponse) aContext.getResponse();
+        messageQueue.storeContext(MessageProducer.GROUP1, contextInfo);
 
-                response.setStatus(200);
-                try {
-                    PrintWriter writer = response.getWriter();
-                    writer.println(result);
-                    writer.flush();
-                } catch (IOException ex) {
-                    System.err.println("IOExcepion in ListenServlet::doGet() -- Details: " + ex);
-                }
-                aContext.complete();
-            }
-        });
+        System.out.println("Freeing up thread " + Thread.currentThread().getName());
     }
 
 }

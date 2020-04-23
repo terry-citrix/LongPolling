@@ -24,10 +24,10 @@ public class ThreadMessageQueueImpl implements ThreadMessageQueue {
         List<Object> locks = lockMap.get(groupId);
         if (locks == null) {
             locks = new ArrayList<Object>();
+            lockMap.put(groupId, locks);
         }
 
         locks.add(lock);
-
     }
 
     @Override

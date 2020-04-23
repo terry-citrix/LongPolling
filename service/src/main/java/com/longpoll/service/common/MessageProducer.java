@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.longpoll.service.nothread.logic.NoThreadMessageQueue;
 import com.longpoll.service.thread.logic.ThreadMessageQueue;
 
 import org.springframework.beans.factory.DisposableBean;
@@ -14,14 +15,18 @@ import org.springframework.stereotype.Component;
  * This feeds new messages into both ThreadMessageQueue as well as NoThreadMessageQueue.
  */
 @Component
-class MessageProducer implements DisposableBean, Runnable {
+public class MessageProducer implements DisposableBean, Runnable {
+
+    public final static String GROUP1 = "group1";
 
     private Thread thread;
     private ThreadMessageQueue threadMessageQueue;
+    private NoThreadMessageQueue nothreadMessageQueue;
 
     @Autowired
-    public MessageProducer(ThreadMessageQueue threadMessageQueue) {
+    public MessageProducer(ThreadMessageQueue threadMessageQueue, NoThreadMessageQueue nothreadMessageQueue) {
         this.threadMessageQueue = threadMessageQueue;
+        this.nothreadMessageQueue = nothreadMessageQueue;
 
         this.thread = new Thread(this);
         this.thread.start();
@@ -42,8 +47,11 @@ class MessageProducer implements DisposableBean, Runnable {
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
 
-            System.out.println("Produced a new message with value: '" + dateFormat.format(date) + "'");
-            threadMessageQueue.pushMessage(ThreadMessageQueue.GROUP1, dateFormat.format(date));
+            String message = dateFormat.format(date);
+            System.out.println("Produced a new message with value: '" + message + "'");
+            
+            threadMessageQueue.pushMessage(GROUP1, message);
+            nothreadMessageQueue.pushMessage(GROUP1, message);
         }
     }
 

@@ -1,5 +1,7 @@
 package com.longpoll.service.thread.logic;
 
+import com.longpoll.service.common.MessageProducer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ public class ThreadMessageListenerImpl implements ThreadMessageListener {
 
     public String getMessage(String groupId) {
         Object lock = new Object();
-        messageQueue.storeLock(ThreadMessageQueue.GROUP1, lock);
+        messageQueue.storeLock(MessageProducer.GROUP1, lock);
         System.out.println("Waiting on a new message in thread " + Thread.currentThread().getName());
 
         synchronized(lock) {
@@ -26,7 +28,7 @@ public class ThreadMessageListenerImpl implements ThreadMessageListener {
             }
         }
 
-        return messageQueue.getMessage(ThreadMessageQueue.GROUP1);
+        return messageQueue.getMessage(MessageProducer.GROUP1);
     }
 
 }
