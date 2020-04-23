@@ -1,8 +1,10 @@
-package com.longpoll.service.thread.logic;
+package com.longpoll.service.common;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.longpoll.service.thread.logic.MessageQueue;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;

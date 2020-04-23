@@ -16,7 +16,7 @@ public class MessageListenerImpl implements MessageListener {
     public String getMessage(String groupId) {
         Object lock = new Object();
         messageQueue.storeLock(MessageQueue.GROUP1, lock);
-//        System.out.println("Waiting on a new message in thread " + Thread.currentThread().getName());
+        System.out.println("Waiting on a new message in thread " + Thread.currentThread().getName());
 
         synchronized(lock) {
             try {

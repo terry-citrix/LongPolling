@@ -3,12 +3,16 @@ package com.longpoll.service;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ServletComponentScan({
+	"com.longpoll.service.nothread.servlet"})
 @ComponentScan({
+	"com.longpoll.service.common",
 	"com.longpoll.service.nothread.servlet",
 	"com.longpoll.service.thread.controller",
 	"com.longpoll.service.thread.logic"})
