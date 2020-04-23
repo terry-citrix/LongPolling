@@ -1,4 +1,4 @@
-package com.longpoll.service.logic;
+package com.longpoll.service.thread.logic;
 
 import java.util.ArrayList;
 import java.util.Collections;

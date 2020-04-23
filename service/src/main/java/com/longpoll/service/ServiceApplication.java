@@ -9,9 +9,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan({
-	"com.longpoll.service.controller",
-	"com.longpoll.service.background",
-	"com.longpoll.service.logic"})
+	"com.longpoll.service.nothread.servlet",
+	"com.longpoll.service.thread.controller",
+	"com.longpoll.service.thread.logic"})
 public class ServiceApplication {
 
 	public static void main(String[] args) {

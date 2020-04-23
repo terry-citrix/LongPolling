@@ -1,4 +1,4 @@
-package com.longpoll.service.logic;
+package com.longpoll.service.thread.logic;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

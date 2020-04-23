@@ -1,4 +1,4 @@
-package com.longpoll.service.controller;
+package com.longpoll.service.thread.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
