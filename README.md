@@ -80,3 +80,5 @@ Creating response for asyncContext from original thread http-nio-8083-exec-1 in 
 In this environment I only have 3 Tomcat HTTP Threads in my request thread pool. You can see that I made 6 requests, and each one is handled.  That's because after each invocation the HTTP thread is freed up and is available to handle a new HTTP request.
 
 Then a new message is produced, and we see that all 6 requests are quickly responded to.
+
+To use a different thread pool see https://stackoverflow.com/questions/17287686/how-to-run-a-different-thread-in-a-servlet
