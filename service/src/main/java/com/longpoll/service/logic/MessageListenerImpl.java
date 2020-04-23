@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageListenerImpl implements MessageListener {
 
-    private Object lockObject;
     private MessageQueue messageQueue;
 
     @Autowired
@@ -15,10 +14,14 @@ public class MessageListenerImpl implements MessageListener {
     }
 
     public String getMessage(String groupId) {
-        lockObject = messageQueue.getLock(MessageQueue.GROUP1);
-        synchronized(lockObject) {
+        Object lock = new Object();
+        messageQueue.storeLock(MessageQueue.GROUP1, lock);
+
+        synchronized(lock) {
+            System.out.println("Waiting on a new message in thread " + Thread.currentThread().getName());
+
             try {
-                lockObject.wait();      // We're going to wait until we get a NEW message.
+                lock.wait();      // We're going to wait until we get a NEW message.
             } catch (InterruptedException ex) {
                 System.out.println("Error during wait() -- Details: " + ex);
             }

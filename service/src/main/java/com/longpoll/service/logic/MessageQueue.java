@@ -8,6 +8,6 @@ public interface MessageQueue {
 
     String getMessage(String groupId);
 
-    Object getLock(String groupId);
+    void storeLock(String groupId, Object lock);
 
 }

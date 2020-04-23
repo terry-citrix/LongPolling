@@ -23,13 +23,13 @@ class MessageProducer implements DisposableBean, Runnable {
     }
 
     /**
-     * Every 10 seconds this will produce a new timestamp and push it to the MessageQueue.
+     * Every 20 seconds this will produce a new timestamp and push it to the MessageQueue.
      */
     @Override
     public void run() {
         while(true) {
             try {
-                Thread.sleep(10 * 1000);
+                Thread.sleep(20 * 1000);
             } catch (InterruptedException ex) {
                 System.err.println("Error in MessageProducer:run() -- Details: " + ex);
             }

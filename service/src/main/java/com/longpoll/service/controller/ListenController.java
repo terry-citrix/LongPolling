@@ -21,6 +21,8 @@ public class ListenController {
 
     @GetMapping("/listen")
     public String listen() {
+        System.out.println("Accepting '/api/listen' request");
+
         return messageListener.getMessage(MessageQueue.GROUP1);
     }
 
