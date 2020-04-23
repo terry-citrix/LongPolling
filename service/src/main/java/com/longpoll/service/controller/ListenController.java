@@ -21,9 +21,12 @@ public class ListenController {
 
     @GetMapping("/listen")
     public String listen() {
-        System.out.println("Accepting '/api/listen' request");
+        System.out.println("Accepting '/api/listen' request; waiting on new message; thread " + Thread.currentThread().getId());
 
-        return messageListener.getMessage(MessageQueue.GROUP1);
+        String response = messageListener.getMessage(MessageQueue.GROUP1);
+
+        System.out.println("Returning value '" + response + "' to caller");
+        return response;
     }
 
 }

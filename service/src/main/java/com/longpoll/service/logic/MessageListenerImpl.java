@@ -18,7 +18,7 @@ public class MessageListenerImpl implements MessageListener {
         messageQueue.storeLock(MessageQueue.GROUP1, lock);
 
         synchronized(lock) {
-            System.out.println("Waiting on a new message in thread " + Thread.currentThread().getName());
+            //System.out.println("Waiting on a new message in thread " + Thread.currentThread().getName());
 
             try {
                 lock.wait();      // We're going to wait until we get a NEW message.
