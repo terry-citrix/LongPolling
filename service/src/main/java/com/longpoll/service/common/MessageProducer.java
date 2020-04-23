@@ -4,28 +4,31 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.longpoll.service.thread.logic.MessageQueue;
+import com.longpoll.service.thread.logic.ThreadMessageQueue;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * This feeds new messages into both ThreadMessageQueue as well as NoThreadMessageQueue.
+ */
 @Component
 class MessageProducer implements DisposableBean, Runnable {
 
     private Thread thread;
-    private MessageQueue messageQueue;
+    private ThreadMessageQueue threadMessageQueue;
 
     @Autowired
-    public MessageProducer(MessageQueue messageQueue) {
-        this.messageQueue = messageQueue;
+    public MessageProducer(ThreadMessageQueue threadMessageQueue) {
+        this.threadMessageQueue = threadMessageQueue;
 
         this.thread = new Thread(this);
         this.thread.start();
     }
 
     /**
-     * Every 20 seconds this will produce a new timestamp and push it to the MessageQueue.
+     * Every 20 seconds this will produce a new timestamp and push it to the ThreadMessageQueue.
      */
     @Override
     public void run() {
@@ -40,7 +43,7 @@ class MessageProducer implements DisposableBean, Runnable {
             Date date = new Date();
 
             System.out.println("Produced a new message with value: '" + dateFormat.format(date) + "'");
-            messageQueue.pushMessage(MessageQueue.GROUP1, dateFormat.format(date));
+            threadMessageQueue.pushMessage(ThreadMessageQueue.GROUP1, dateFormat.format(date));
         }
     }
 

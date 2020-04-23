@@ -1,6 +1,6 @@
 package com.longpoll.service.thread.logic;
 
-public interface MessageListener {
+public interface ThreadMessageListener {
 
     String getMessage(String groupId);
 

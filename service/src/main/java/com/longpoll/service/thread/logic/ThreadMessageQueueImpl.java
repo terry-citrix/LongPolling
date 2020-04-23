@@ -9,7 +9,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MessageQueueImpl implements MessageQueue {
+public class ThreadMessageQueueImpl implements ThreadMessageQueue {
 
     private Map<String, List<Object>> lockMap = new HashMap<String, List<Object>>();
     private Map<String, String> messageMap = Collections.synchronizedMap(new HashMap<String, String>());

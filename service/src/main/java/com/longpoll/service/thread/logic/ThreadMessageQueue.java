@@ -1,6 +1,6 @@
 package com.longpoll.service.thread.logic;
 
-public interface MessageQueue {
+public interface ThreadMessageQueue {
 
     final static String GROUP1 = "group1";
 

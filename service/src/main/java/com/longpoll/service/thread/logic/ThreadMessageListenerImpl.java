@@ -4,18 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MessageListenerImpl implements MessageListener {
+public class ThreadMessageListenerImpl implements ThreadMessageListener {
 
-    private MessageQueue messageQueue;
+    private ThreadMessageQueue messageQueue;
 
     @Autowired
-    public MessageListenerImpl(MessageQueue messageQueue) {
+    public ThreadMessageListenerImpl(ThreadMessageQueue messageQueue) {
         this.messageQueue = messageQueue;
     }
 
     public String getMessage(String groupId) {
         Object lock = new Object();
-        messageQueue.storeLock(MessageQueue.GROUP1, lock);
+        messageQueue.storeLock(ThreadMessageQueue.GROUP1, lock);
         System.out.println("Waiting on a new message in thread " + Thread.currentThread().getName());
 
         synchronized(lock) {
@@ -26,7 +26,7 @@ public class MessageListenerImpl implements MessageListener {
             }
         }
 
-        return messageQueue.getMessage(MessageQueue.GROUP1);
+        return messageQueue.getMessage(ThreadMessageQueue.GROUP1);
     }
 
 }
