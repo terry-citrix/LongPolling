@@ -1,6 +1,7 @@
 package com.longpoll.service.controller;
 
 import com.longpoll.service.logic.MessageListener;
+import com.longpoll.service.logic.MessageQueue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ public class ListenController {
 
     @GetMapping("/listen")
     public String listen() {
-        return messageListener.getMessage();
+        return messageListener.getMessage(MessageQueue.GROUP1);
     }
 
 }
