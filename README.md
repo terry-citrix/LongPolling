@@ -1,7 +1,7 @@
 # LongPolling
 Proof of Concept for doing long-polling in a Spring-based Tomcat-hosted service.
 
-NOTE: This is the sole creation of Thierry Duchastel, in his own free time. This is *not* affiliated with any corporation, and is solely a proof-of-concept. No support of any kind is implied or provided.
+NOTE: This is the sole creation of Thierry Duchastel, in his own free time and developed at home on his own hardware and software. This is *not* affiliated with any corporation, and is solely a proof-of-concept. No support of any kind is implied or provided.
 
 
 ## Compile
