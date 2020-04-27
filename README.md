@@ -1,6 +1,9 @@
 # LongPolling
 Proof of Concept for doing long-polling in a Spring-based Tomcat-hosted service. Comes with a simple client as well.
 
+NOTE: This is the sole creation of Thierry Duchastel, in his own free time. This is *not* affiliated with any corporation, and is solely a proof-of-concept. No support of any kind is implied or provided.
+
+
 ## Compile
 
 Run *.\gradlew.bat clean build*
